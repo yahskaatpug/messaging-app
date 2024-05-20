@@ -1,0 +1,23 @@
+<div>
+    <h2>Send Message</h2>
+    <form [formGroup]="messageForm">
+      <div>
+        <label for="phoneNumber">Phone Number(+91):</label>
+        <input id="phoneNumber" formControlName="phoneNumber" placeholder="Enter phone number">
+        <div *ngIf="messageForm.get('phoneNumber')?.invalid && (messageForm.get('phoneNumber')?.touched || messageForm.get('phoneNumber')?.dirty)">
+          <small *ngIf="messageForm.get('phoneNumber')?.hasError('required')">Phone number is required</small>
+          <small *ngIf="messageForm.get('phoneNumber')?.hasError('pattern')">Enter a valid phone number (e.g., +919876543210)</small>
+        </div>
+      </div>
+      <div>
+        <label for="message">Message:</label>
+        <textarea id="message" formControlName="message" placeholder="Enter your message"></textarea>
+        <div *ngIf="messageForm.get('message')?.invalid && (messageForm.get('message')?.touched || messageForm.get('message')?.dirty)">
+          <small *ngIf="messageForm.get('message')?.hasError('required')">Message is required</small>
+        </div>
+      </div>
+      <button type="button" (click)="sendTextMsg()" [disabled]="messageForm.invalid">Send SMS</button>
+      <button type="button" (click)="sendWhatsAppMsg()" [disabled]="messageForm.invalid">Send WhatsApp</button>
+    </form>
+  </div>
+  
