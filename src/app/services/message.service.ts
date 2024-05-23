@@ -22,4 +22,9 @@ export class MessageService {
 
   }
 
+  sendPersonalisedWhatsAppMsg(phoneNumber:string, message:string): Observable<any>{
+    return this.http.post(`${this.apiUrl}/send-personalised-whatsapp-message`, {phoneNumber, message});
+ 
+   }
+
 }

@@ -43,7 +43,7 @@ export class MessageComponent {
       });
         console.log('text message delivered successfully',res);
       }, err=>{
-        this.snackbar.open('text message failedto deliver','',{
+        this.snackbar.open('text message failed to deliver','',{
           duration: 3000,
         });
         console.log('error->',err);
@@ -63,6 +63,33 @@ export class MessageComponent {
       }
 
       this.messageService.sendWhatsAppMessage(phoneNumber, message).subscribe(res =>{
+        this.snackbar.open('whatsapp message delivered successfully','',{
+          duration: 10000,
+        });
+      }, err=>{
+        this.snackbar.open('Whatsapp message failed to deliver','',{
+          duration: 3000,
+        });
+        console.log('error->',err);
+      });
+    }
+  }
+
+  sendPersonalisedWhatsAppMsg(){
+    if(this.messageForm.valid){
+      let phoneNumber = this.messageForm.get('phoneNumber')?.value;
+      const message = this.messageForm.get('message')?.value;
+
+
+      // if a user does not provide country code then append it
+      if(phoneNumber[0] != '+'){
+        phoneNumber = '91'+phoneNumber;
+      }
+      else if(phoneNumber[0] == '+'){
+        phoneNumber = phoneNumber.substring(1);
+      }
+
+      this.messageService.sendPersonalisedWhatsAppMsg(phoneNumber, message).subscribe(res =>{
         this.snackbar.open('whatsapp message delivered successfully','',{
           duration: 10000,
         });
